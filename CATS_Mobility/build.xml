@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="CATS_Mobility">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../eclipse/jee-neon4/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Maven Dependencies.libraryclasspath">
+        <pathelement location="../../../../.m2/repository/io/appium/java-client/3.4.0/java-client-3.4.0.jar"/>
+        <pathelement location="../../../../.m2/repository/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"/>
+        <pathelement location="../../../../.m2/repository/org/apache/httpcomponents/httpclient/4.3.3/httpclient-4.3.3.jar"/>
+        <pathelement location="../../../../.m2/repository/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar"/>
+        <pathelement location="../../../../.m2/repository/com/google/guava/guava/17.0/guava-17.0.jar"/>
+        <pathelement location="../../../../.m2/repository/cglib/cglib/3.1/cglib-3.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/ow2/asm/asm/4.2/asm-4.2.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-validator/commons-validator/1.4.0/commons-validator-1.4.0.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/apache/commons/commons-lang3/3.0/commons-lang3-3.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-java/2.53.0/selenium-java-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-chrome-driver/2.53.0/selenium-chrome-driver-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-remote-driver/2.53.0/selenium-remote-driver-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-api/2.53.0/selenium-api-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-edge-driver/2.53.0/selenium-edge-driver-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar"/>
+        <pathelement location="../../../../.m2/repository/org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-firefox-driver/2.53.0/selenium-firefox-driver-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-ie-driver/2.53.0/selenium-ie-driver-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/net/java/dev/jna/jna/4.1.0/jna-4.1.0.jar"/>
+        <pathelement location="../../../../.m2/repository/net/java/dev/jna/jna-platform/4.1.0/jna-platform-4.1.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-safari-driver/2.53.0/selenium-safari-driver-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/io/netty/netty/3.5.7.Final/netty-3.5.7.Final.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-support/2.53.0/selenium-support-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/seleniumhq/selenium/selenium-leg-rc/2.53.0/selenium-leg-rc-2.53.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/apache/poi/poi/3.14/poi-3.14.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"/>
+        <pathelement location="../../../../.m2/repository/com/relevantcodes/extentreports/2.41.0/extentreports-2.41.0.jar"/>
+        <pathelement location="../../../../.m2/repository/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar"/>
+        <pathelement location="../../../../.m2/repository/org/xerial/sqlite-jdbc/3.8.11.1/sqlite-jdbc-3.8.11.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/freemarker/freemarker/2.3.23/freemarker-2.3.23.jar"/>
+        <pathelement location="../../../../.m2/repository/org/mongodb/mongodb-driver/3.0.4/mongodb-driver-3.0.4.jar"/>
+        <pathelement location="../../../../.m2/repository/org/mongodb/bson/3.0.4/bson-3.0.4.jar"/>
+        <pathelement location="../../../../.m2/repository/org/mongodb/mongodb-driver-core/3.0.4/mongodb-driver-core-3.0.4.jar"/>
+        <pathelement location="../../../../.m2/repository/net/sf/ucanaccess/ucanaccess/3.0.5/ucanaccess-3.0.5.jar"/>
+        <pathelement location="../../../../.m2/repository/org/hsqldb/hsqldb/2.3.1/hsqldb-2.3.1.jar"/>
+        <pathelement location="../../../../.m2/repository/com/healthmarketscience/jackcess/jackcess/2.1.3/jackcess-2.1.3.jar"/>
+        <pathelement location="../../../../.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar"/>
+        <pathelement location="../../../../.m2/repository/org/testng/testng/6.8/testng-6.8.jar"/>
+        <pathelement location="../../../../.m2/repository/junit/junit/4.10/junit-4.10.jar"/>
+        <pathelement location="../../../../.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+        <pathelement location="../../../../.m2/repository/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar"/>
+        <pathelement location="../../../../.m2/repository/com/beust/jcommander/1.27/jcommander-1.27.jar"/>
+        <pathelement location="../../../../.m2/repository/org/yaml/snakeyaml/1.6/snakeyaml-1.6.jar"/>
+    </path>
+    <path id="TestNG.libraryclasspath">
+        <pathelement location="../../../../.p2/pool/plugins/org.testng.eclipse_6.9.12.201607091356/lib/testng.jar"/>
+        <pathelement location="../../../../.p2/pool/plugins/org.testng.eclipse_6.9.12.201607091356/lib/jcommander.jar"/>
+        <pathelement location="../../../../.p2/pool/plugins/org.testng.eclipse_6.9.12.201607091356/lib/bsh-2.0b4.jar"/>
+        <pathelement location="../../../../.p2/pool/plugins/org.testng.eclipse_6.9.12.201607091356/lib/snakeyaml.jar"/>
+    </path>
+    <path id="CATS_Mobility.classpath">
+        <pathelement location="target/classes"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+        <path refid="TestNG.libraryclasspath"/>
+    </path>
+    <path id="run.AppiumServerHandler.classpath">
+        <path refid="CATS_Mobility.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.Main.classpath">
+        <path refid="CATS_Mobility.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.AppiumParallelExecution.classpath">
+        <path refid="CATS_Mobility.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="target/classes"/>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src">
+                <include name="**/*.java"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="target/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <include name="**/*.java"/>
+            <classpath refid="CATS_Mobility.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="AppiumServerHandler">
+        <java classname="main.java.utils.AppiumServerHandler" failonerror="true" fork="yes">
+            <classpath refid="run.AppiumServerHandler.classpath"/>
+        </java>
+    </target>
+    <target name="Main">
+        <java classname="main.java.base.Main" failonerror="true" fork="yes">
+            <classpath refid="run.Main.classpath"/>
+        </java>
+    </target>
+    <target name="AppiumParallelExecution">
+        <java classname="main.java.utils.AppiumParallelExecution" failonerror="true" fork="yes">
+            <classpath refid="run.AppiumParallelExecution.classpath"/>
+        </java>
+    </target>
+</project>
