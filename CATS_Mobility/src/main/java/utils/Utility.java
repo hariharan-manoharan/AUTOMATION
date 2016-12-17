@@ -320,7 +320,7 @@ public class Utility {
 	}
 	
 	public void ScrolltoText(String text) {
-		this.driver.scrollTo(text);
+		driver.scrollTo(text);
 		
 	}
 
