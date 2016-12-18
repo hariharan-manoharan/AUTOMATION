@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.exec.ExecuteException;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -24,8 +25,9 @@ import main.java.executionSetup.TestParameters;
 import main.java.testDataAccess.DataTable;
 import main.java.utils.AppiumServerHandler;
 import main.java.utils.AppiumServerHandlerCmd;
+import main.java.utils.Utility;
 
-public class Executor implements Runnable {
+public class Executor extends Utility implements Runnable {
 
 	private ExtentReports report;
 	private ExtentTest test;
@@ -47,63 +49,74 @@ public class Executor implements Runnable {
 
 	@Override
 	public void run() {
-		if (testParameters.getExecuteCurrentTestCase().equalsIgnoreCase("Yes")) {
-			test = report.startTest(testParameters.getCurrentTestCase());
-			dataTable.setCurrentRow(testParameters.getCurrentTestCase());
-			test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution started", "");
-			executeKeywords(getKeywords());
-			test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution completed", "");
-			report.endTest(test);
-			report.flush();
+		try {
+			if (testParameters.getExecuteCurrentTestCase().equalsIgnoreCase("Yes")) {
+				test = report.startTest(testParameters.getCurrentTestCase());
+				dataTable.setCurrentRow(testParameters.getCurrentTestCase());
+				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution started", "");
+				executeKeywords(getKeywords());
+				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution completed", "");
+				report.endTest(test);
+				report.flush();
+			}
+		} catch (SessionNotCreatedException e) {
+			test.log(LogStatus.FAIL, "Android Driver and Appium server setup not done Successfully", "");
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (ExecuteException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (ClassNotFoundException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (InstantiationException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (IllegalAccessException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (IllegalArgumentException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (InvocationTargetException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (NoSuchMethodException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (SecurityException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (IOException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (InterruptedException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
 		}
 	}
 
-	public void executeKeywords(LinkedHashMap<String, String> keywords) {
+	public void executeKeywords(LinkedHashMap<String, String> keywords)
+			throws ExecuteException, IOException, InterruptedException, ClassNotFoundException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
+			SecurityException, SessionNotCreatedException {
 
-		try {
+		driverSetUp();
 
-			driverSetUp();
+		Class<?> className = Class.forName("main.java.businessComponents." + execMode + ".FunctionalComponents");
+		Constructor<?> constructor = className.getDeclaredConstructors()[0];
+		Object classInstance = constructor.newInstance(test, driver);
 
-			Class<?> className = Class.forName("main.java.businessComponents." + execMode + ".FunctionalComponents");
-			Constructor<?> constructor = className.getDeclaredConstructors()[0];
-			Object classInstance = constructor.newInstance(test, driver);
-
-			for (Entry<String, String> map : keywords.entrySet()) {
-				if (!map.getKey().equals("TC_ID")) {
-					String currentKeyword = map.getValue().substring(0, 1).toLowerCase() + map.getValue().substring(1);
-					Method method = className.getMethod(currentKeyword);
-					method.invoke(classInstance);
-				}
+		for (Entry<String, String> map : keywords.entrySet()) {
+			if (!map.getKey().equals("TC_ID")) {
+				String currentKeyword = map.getValue().substring(0, 1).toLowerCase() + map.getValue().substring(1);
+				test.log(LogStatus.INFO, "Current Keyword - " + currentKeyword, "");
+				Method method = className.getMethod(currentKeyword);
+				method.invoke(classInstance);
 			}
-
-			end();
-
-		} catch (ClassNotFoundException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (NoSuchMethodException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (SecurityException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (IllegalAccessException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (IllegalArgumentException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (InvocationTargetException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (InstantiationException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
-		} catch (IOException | InterruptedException e) {
-			test.log(LogStatus.FAIL, e);
-			end();
 		}
 
+		end();
 	}
 
 	public LinkedHashMap<String, String> getKeywords() {
@@ -115,34 +128,30 @@ public class Executor implements Runnable {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public void driverSetUp() throws ExecuteException, IOException, InterruptedException {
+	public void driverSetUp() throws ExecuteException, IOException, InterruptedException, SessionNotCreatedException {
 
-		try {
+		appiumServerHandler = new AppiumServerHandler(Integer.parseInt(testParameters.getPort()),
+				testParameters.getBootstrapPort());
+		appiumServerHandler.appiumServerStart();
 
-			appiumServerHandler = new AppiumServerHandler(Integer.parseInt(testParameters.getPort()),
-					testParameters.getBootstrapPort());
-			appiumServerHandler.appiumServerStart();
+		String absolutePath = new File(System.getProperty("user.dir")).getAbsolutePath();
 
-			String absolutePath = new File(System.getProperty("user.dir")).getAbsolutePath();
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("deviceName", testParameters.getDeviceName());
+		capabilities.setCapability("udid", testParameters.getUdid());
+		capabilities.setCapability(CapabilityType.BROWSER_NAME, testParameters.getBROWSER_NAME());
+		capabilities.setCapability(CapabilityType.VERSION, testParameters.getVERSION());
+		capabilities.setCapability("app", absolutePath + "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
+		capabilities.setCapability("platformName", testParameters.getPlatformName());
+		capabilities.setCapability("appPackage", testParameters.getAppPackage());
+		capabilities.setCapability("appActivity", testParameters.getAppActivity());
 
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			capabilities.setCapability("deviceName", testParameters.getDeviceName());
-			capabilities.setCapability("udid", testParameters.getUdid());
-			capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
-			capabilities.setCapability(CapabilityType.VERSION, "4.2.2");
-			capabilities.setCapability("app", absolutePath + "\\src\\main\\resources\\Libs\\CATS-Mobility.apk");
-			capabilities.setCapability("platformName", "Android");
-			capabilities.setCapability("appPackage", "net.fulcrum.mobility");
-			capabilities.setCapability("appActivity", "net.fulcrum.mobility.activities.LoginActivity");
+		driver = new AndroidDriver(new URL(
+				"http://" + properties.getProperty("RemoteAddress") + ":" + testParameters.getPort() + "/wd/hub"),
+				capabilities);
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
-			driver = new AndroidDriver(new URL("http://127.0.0.1:" + testParameters.getPort() + "/wd/hub"),
-					capabilities);
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-			test.log(LogStatus.INFO, "Android Driver and Appium server setup done Successfully", "");
-		} catch (Exception ex) {
-			test.log(LogStatus.FAIL, "Android Driver and Appium server setup not done Successfully", "");
-		}
+		test.log(LogStatus.INFO, "Android Driver and Appium server setup done Successfully", "");
 
 	}
 

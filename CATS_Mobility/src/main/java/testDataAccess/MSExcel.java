@@ -194,15 +194,24 @@ public class MSExcel implements DataTable {
 
 		for (int i = 1; i <= lastRunNum; i++) {
 			TestParameters testParameter = new TestParameters();
+			
+			if(getData("RunInfo", i, "Execute").equalsIgnoreCase("Yes")){
 
 			testParameter.setCurrentTestCase(getData("RunInfo", i, "TC_ID"));
 			testParameter.setExecuteCurrentTestCase(getData("RunInfo", i, "Execute"));
-			testParameter.setPort(getData("RunInfo", i, "port"));
-			testParameter.setBootstrapPort(getData("RunInfo", i, "bootstrapPort"));
-			testParameter.setDeviceName(getData("RunInfo", i, "deviceName"));
-			testParameter.setUdid(getData("RunInfo", i, "udid"));			
+			testParameter.setPort(getData("RunInfo", i, "Port"));
+			testParameter.setBootstrapPort(getData("RunInfo", i, "BootstrapPort"));
+			testParameter.setDeviceName(getData("RunInfo", i, "DeviceName"));
+			testParameter.setUdid(getData("RunInfo", i, "UDID"));		
+			testParameter.setBROWSER_NAME(getData("RunInfo", i, "BROWSER_NAME"));
+			testParameter.setVERSION(getData("RunInfo", i, "VERSION"));
+			testParameter.setApp(getData("RunInfo", i, "App"));
+			testParameter.setAppPackage(getData("RunInfo", i, "AppPackage"));
+			testParameter.setAppActivity(getData("RunInfo", i, "AppActivity"));
+			
 			runInfoArray.add(testParameter);
 
+			}
 		}
 		return runInfoArray;
 	}
