@@ -8,7 +8,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import io.appium.java_client.android.AndroidDriver;
 import main.java.utils.Utility;
 
-public class LoginActivity extends Utility {
+public class LoginActivity extends Utility implements RoutineObjectRepository {
 
 	@SuppressWarnings("rawtypes")
 	public LoginActivity(ExtentTest test, AndroidDriver driver) {
@@ -28,8 +28,8 @@ public class LoginActivity extends Utility {
 	}
 
 	public void login() {
-		EnterText(By.id("username"), "Enter - Username", "catsadm");
-		EnterText(By.id("password"), "Enter - Password", "catscats11");
+		EnterText(TXT_USERNAME, "Enter - Username", "catsadm");
+		EnterText(TXT_PASSWORD, "Enter - Password", "catscats11");
 		HideKeyboard();
 		Click(By.id("btn_connect"), "Click - Connect button");
 	}
