@@ -2,9 +2,15 @@ package main.java.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -35,6 +41,7 @@ public class Utility {
 	protected AndroidDriver driver;
 	protected ExtentTest test;
 	public static Properties properties;
+	public static Connection connection;
 
 	@SuppressWarnings("rawtypes")
 	public Utility(ExtentTest test, AndroidDriver driver) {
@@ -319,9 +326,153 @@ public class Utility {
 		}
 	}
 	
-	public void ScrolltoText(String text) {
-		this.driver.scrollTo(text);
-		
+	/************************************************************************************************
+	 * Function   :ScrolltoText()
+	 * Decsription:Function to Scroll to give text.
+	 * Date		  :14-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/		
+	public void ScrolltoText(String Text){
+		try {
+			this.driver.scrollTo(Text);
+			takeScreenshot("Scrolled to : "+Text);
+		} catch (Exception ex) {
+			test.log(LogStatus.FAIL, ex);
+		}
+
 	}
+	/************************************************************************************************
+	 * Function   :Getconnections()
+	 * Decsription:Function to connect Database
+	 * Date		  :14-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/		
+	public void Getconnections() throws Exception {
+
+		try {
+			String driver = "oracle.jdbc.driver.OracleDriver";
+
+			String url = "jdbc:oracle:thin:@172.16.32.31:1521:orcl"; String
+			username = "CATS"; String password = "CATS";
+
+			Class.forName(driver);
+			connection = DriverManager.getConnection(url, username, password);
+
+		} catch (Exception e) {
+			test.log(LogStatus.FAIL, e);
+
+		}
+
+	}
+
+	/************************************************************************************************
+	 * Function   :Closeconnections()
+	 * Decsription:Function to connect Database
+	 * Date		  :14-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/		
+	public void Closeconnections() throws Exception {
+		try{
+			connection.close();
+			if (connection.isClosed()) 
+				System.out.println("Connection closed.");
+
+		} catch (Exception e) {
+			test.log(LogStatus.FAIL, e);
+		}
+
+	}
+	/************************************************************************************************
+	 * Function   :Design in progress
+	 * Decsription:Function to connect Database
+	 * Date		  :14-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+	public void SqlQuery(String Text , String Text1) {
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = connection.createStatement();			
+			rs = stmt.executeQuery(Text);			
+			while (rs.next()) {
+
+				String [] Key = Text1.split("#");
+				int key1=Key.length;
+				for(int i=0;i<key1;i++){
+					String txt = rs.getString(Key[i]);
+					HashMap<String,String> map=new HashMap<String,String>(); 
+					map.put(Key[i],txt);  
+					System.out.println(Key[i] + txt);
+				}
+
+			}
+		} catch (SQLException e) {			
+			test.log(LogStatus.FAIL, e);
+		}
+	}
+
+	/************************************************************************************************
+	 * Function   :GetNonSerializedPart
+	 * Decsription:Function to get Nonserialized part from DB
+	 * Date		  :16-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+	public String GetNonSerializedPart(){
+		String partcode = null;
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = connection.createStatement();			
+			rs = stmt.executeQuery("select * from cats_part p left join cats_partdetail pd on p.partid = pd.partid where p.Active = 'Y' and p.Trackable = 'Y'and p.ORDERABLE = 'Y'and p.ORDERABLE = 'Y'and p.PURCHASABLE = 'Y'and p.INSTALLABLE = 'Y'and p.SERIALIZED = 'N'and p.KIT = 'N'and p.ASSEMBLY = 'N'and pd.partid is null");			
+			while (rs.next()){
+				Object firstrow =rs.getObject(1);
+				partcode = rs.getString("PARTCODE");
+				System.out.println(partcode);
+				if(!partcode.equals(null)){
+					break;
+				}
+				return partcode;
+
+			} 
+		}catch (SQLException e) {			
+			test.log(LogStatus.FAIL, e);
+		}
+
+		return partcode;
+
+
+	}
+	/************************************************************************************************
+	 * Function   :GetSerializedPart
+	 * Decsription:Function to get serialized part from DB
+	 * Date		  :16-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+
+	public String GetSerializedPart(){
+		String partcode = null;
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = connection.createStatement();			
+			rs = stmt.executeQuery("select * from cats_part p left join cats_partdetail pd on p.partid = pd.partid where p.Active = 'Y' and p.Trackable = 'Y'and p.ORDERABLE = 'Y'and p.ORDERABLE = 'Y'and p.PURCHASABLE = 'Y'and p.INSTALLABLE = 'Y'and p.SERIALIZED = 'Y'and p.KIT = 'N'and p.ASSEMBLY = 'N'and pd.partid is null");			
+			while (rs.next()){
+				Object firstrow =rs.getObject(1);
+				partcode = rs.getString("PARTCODE");
+				System.out.println(partcode);
+				if(!partcode.equals(null)){
+					break;
+				}
+				return partcode;
+
+			} 
+		}catch (SQLException e) {			
+			e.printStackTrace();
+		}
+
+		return partcode;		
+
+	}
+
 
 }

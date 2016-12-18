@@ -56,8 +56,10 @@ public class Main{
 		initializeTestReport();		
 		prepare();		
 		collectRunInfo();		
-		setup();		
-		execute();		
+		setup();
+		getConnection();
+		execute();
+		closeConnection();
 		tearDown();	
 		
 	}
@@ -245,5 +247,39 @@ public class Main{
 		
 	}
 	
+	/************************************************************************************************
+	 * Function   :getConnection() 
+	 * Decsription:Function to connect to DB
+	 * Date		  :17-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+	private static void getConnection() {
+		
+		Utility util= new Utility();
+		try {
+			util.Getconnections();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	/************************************************************************************************
+	 * Function   :closeConnection()
+	 * Decsription:Function to close DB connection
+	 * Date		  :17-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+	private static void closeConnection() {
+		
+		Utility util= new Utility();
+		try {
+			util.Closeconnections();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 		
 }
