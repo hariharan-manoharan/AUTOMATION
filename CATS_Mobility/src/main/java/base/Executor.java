@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.exec.ExecuteException;
@@ -103,9 +104,9 @@ public class Executor extends Utility implements Runnable {
 
 		driverSetUp();
 
-		Class<?> className = Class.forName("main.java.businessComponents." + execMode + ".FunctionalComponents");
+		Class<?> className = Class.forName("main.java.businessComponents." + execMode +"."+properties.getProperty("Project")+".FunctionalComponents");
 		Constructor<?> constructor = className.getDeclaredConstructors()[0];
-		Object classInstance = constructor.newInstance(test, driver);
+		Object classInstance = constructor.newInstance(test, driver,dataTable);
 
 		for (Entry<String, String> map : keywords.entrySet()) {
 			if (!map.getKey().equals("TC_ID")) {
