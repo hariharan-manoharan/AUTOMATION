@@ -123,7 +123,7 @@ public class Executor extends Utility implements Runnable {
 	public LinkedHashMap<String, String> getKeywords() {
 
 		LinkedHashMap<String, String> keywordMap = new LinkedHashMap<String, String>();
-		keywordMap = dataTable.getRowData("Keywords");
+		keywordMap = dataTable.getRowData("BusinessFlow");
 		return keywordMap;
 
 	}
