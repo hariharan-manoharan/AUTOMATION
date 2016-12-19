@@ -1,4 +1,4 @@
-package main.java.businessComponents.MOBILE;
+package main.java.businessComponents.MOBILE.XO;
 
 import org.openqa.selenium.By;
 

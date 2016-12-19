@@ -1,4 +1,4 @@
-package main.java.businessComponents.MOBILE;
+package main.java.businessComponents.MOBILE.XO;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import io.appium.java_client.android.AndroidDriver;
