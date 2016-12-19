@@ -94,6 +94,9 @@ public class Main{
 		runManager = runManagerFactory.getTestDataTableAccess(runManagerType, "./"+runManagerName);		
 		testInstancesToRun = runManager.getRunManagerInfo();
 		
+		Utility utility = new Utility();
+		utility.setEnvironmentVariables(runManager.getRowData("EnvironmentDetails", properties.getProperty("Environment")));
+			
 	}
 
 	/**
