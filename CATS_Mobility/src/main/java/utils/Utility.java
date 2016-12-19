@@ -186,15 +186,16 @@ public class Utility {
 		}
 	}
 
-	public String GetText(By by) {
+	public String GetText(By by, String FieldName) {
 		String text = null;
+		
 		try {
 			waitCommand(by);
 			text = this.driver.findElement(by).getText();
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
 		}
-		test.log(LogStatus.INFO, "GetText() returned - " + text);
+		test.log(LogStatus.INFO, FieldName + ":  Returned - " + text);
 		return text.trim();
 
 	}
@@ -288,7 +289,7 @@ public class Utility {
 
 	public boolean CompareText(String expected, By by) {
 
-		String actual = GetText(by).trim();
+		String actual = this.driver.findElement(by).getText().trim();
 	
 		if (expected.equals(actual)) {
 			test.log(LogStatus.PASS,"Compare Text() - Expected - "+ expected + ", Actual - "+actual);
