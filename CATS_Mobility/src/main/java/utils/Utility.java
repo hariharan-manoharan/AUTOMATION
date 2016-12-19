@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -33,23 +34,27 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import io.appium.java_client.android.AndroidDriver;
 import main.java.reporting.HtmlReport;
+import main.java.testDataAccess.DataTable;
 
 public class Utility {
 
 	@SuppressWarnings("rawtypes")
 	protected AndroidDriver driver;
 	protected ExtentTest test;
+	protected DataTable dataTable;
 	public static Properties properties;
 	public static Connection connection;
 
 	@SuppressWarnings("rawtypes")
-	public Utility(ExtentTest test, AndroidDriver driver) {
+	public Utility(ExtentTest test, AndroidDriver driver, DataTable dataTable) {
 		this.test = test;
 		this.driver = driver;
+		this.dataTable = dataTable;
 	}
 
+	
 	public Utility() {
-
+		
 	}
 
 	public void takeScreenshot(String reportName) {
@@ -244,6 +249,7 @@ public class Utility {
 		Actions actions = new Actions(this.driver);
 		actions.moveToElement(element);
 		actions.click();
+		actions.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		actions.sendKeys(textToEnter);
 		actions.build().perform();
 	}
@@ -334,7 +340,7 @@ public class Utility {
 	 *************************************************************************************************/		
 	public void ScrolltoText(String Text){
 		try {
-			this.driver.scrollTo(Text);
+			this.driver.scrollToExact(Text);
 			takeScreenshot("Scrolled to : "+Text);
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
