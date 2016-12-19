@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -44,6 +45,7 @@ public class Utility {
 	protected DataTable dataTable;
 	public static Properties properties;
 	public static Connection connection;
+	public static LinkedHashMap<String,String> environmentVariables;
 
 	@SuppressWarnings("rawtypes")
 	public Utility(ExtentTest test, AndroidDriver driver, DataTable dataTable) {
@@ -55,6 +57,17 @@ public class Utility {
 	
 	public Utility() {
 		
+	}
+		
+
+	@SuppressWarnings("static-access")
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+	
+	@SuppressWarnings("static-access")
+	public void setEnvironmentVariables(LinkedHashMap<String,String> environmentVariables) {
+		this.environmentVariables = environmentVariables;
 	}
 
 	public void takeScreenshot(String reportName) {
@@ -92,10 +105,6 @@ public class Utility {
 
 	}
 
-	@SuppressWarnings("static-access")
-	public void setProperties(Properties properties) {
-		this.properties = properties;
-	}
 
 	public void report(String reportName, LogStatus status) {
 
@@ -208,7 +217,7 @@ public class Utility {
 	
 
 	@SuppressWarnings("unchecked")
-	public String GetTextWebView(By by) {
+	public String GetTextWebView(By by, String fieldname) {
 		String text = null;				
 				
 		try {
@@ -220,7 +229,7 @@ public class Utility {
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
 		}
-		test.log(LogStatus.INFO, "GetText() returned - " + text);
+		test.log(LogStatus.INFO, fieldname + ":  Returned - " + text);
 		return text.trim();
 
 	}
@@ -332,6 +341,18 @@ public class Utility {
 		}
 	}
 	
+	
+	public boolean verifyTransactionCreation(By by, String loopingField){
+
+		if (GetTextWebView(by, "Looping field").equalsIgnoreCase(loopingField)) {
+			test.log(LogStatus.PASS, "Transaction created successfully");
+			return true;
+		}
+		test.log(LogStatus.FAIL, "Transaction created not successfully");
+		return false;
+
+	}
+	
 	/************************************************************************************************
 	 * Function   :ScrolltoText()
 	 * Decsription:Function to Scroll to give text.
@@ -358,8 +379,8 @@ public class Utility {
 		try {
 			String driver = "oracle.jdbc.driver.OracleDriver";
 
-			String url = "jdbc:oracle:thin:@172.16.32.31:1521:orcl"; String
-			username = "CATS"; String password = "CATS";
+			String url = "jdbc:oracle:thin:@"+environmentVariables.get("DataBaseURL");
+			String username = "CATS"; String password = "CATS";
 
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, username, password);
