@@ -45,9 +45,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 			ClickNext();
 			EnterTextWebView(XPATH_TXT_WEBVIEW,"Enter Transfer Request (*)","T000000003");
 			ClickNext();			
-			EnterTextWebView(XPATH_TXT_WEBVIEW,"Enter Line/Item # (*)","AND3G0006");
-			ClickNext();
-			EnterTextWebView(XPATH_TXT_WEBVIEW,"Enter Asset Code (UIN)/Serial #","TESTASSET000001");
+			EnterTextWebView(XPATH_TXT_WEBVIEW,"Enter Line/Item # (*)","TESTASSET000001");
 			ClickNext();
 			EnterTextWebView(XPATH_TXT_WEBVIEW,"Enter Notes","Pick - Test Notes");
 			ClickNext();
