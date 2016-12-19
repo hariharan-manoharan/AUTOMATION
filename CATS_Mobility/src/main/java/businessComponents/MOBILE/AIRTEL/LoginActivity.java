@@ -6,22 +6,22 @@ import org.openqa.selenium.By;
 import com.relevantcodes.extentreports.ExtentTest;
 
 import io.appium.java_client.android.AndroidDriver;
+import main.java.testDataAccess.DataTable;
 import main.java.utils.Utility;
 
 public class LoginActivity extends Utility implements RoutineObjectRepository {
 
 	@SuppressWarnings("rawtypes")
-	public LoginActivity(ExtentTest test, AndroidDriver driver) {
-		super.test = test;
-		super.driver = driver;
+	public LoginActivity(ExtentTest test, AndroidDriver driver,DataTable  dataTable) {
+		super(test,driver,dataTable);
 	}
 
 	public void addConnection() {
 		Click(By.name("Add Connection"), "Click - AddConnection");
 		Click(By.id("connections_add"), "Click - AddConnection Symbol");
-		EnterText(By.id("connection_edit_name"), "Enter - Connection Name", "AIRTEL QA2");
+		EnterText(By.id("connection_edit_name"), "Enter - Connection Name", "AIRTEL QA1");
 		EnterText(By.id("connection_edit_host"), "Enter - Host", "services-uswest.skytap.com");
-		EnterText(By.id("connection_edit_port"), "Enter - Port", "25582");
+		EnterText(By.id("connection_edit_port"), "Enter - Port", "21260");
 		Click(By.id("connection_edit_ssl"), "Click - Enable SSL");
 		Click(By.id("connections_save"), "Click - Save Connection");
 		Click(By.id("action_bar_title"), "Click - Back button");
