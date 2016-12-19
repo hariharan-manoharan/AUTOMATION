@@ -181,6 +181,40 @@ public class MSExcel implements DataTable {
 	}
 
 	@Override
+	public LinkedHashMap<String, String> getRowData(String workSheetName, String currentTestCase) {
+
+		LinkedHashMap<String, String> rowData = new LinkedHashMap<String, String>();
+
+		Sheet sheet = getSheet(workSheetName);
+		Row colName = sheet.getRow(0);
+		Row currentRow = sheet.getRow(getRowNum(workSheetName, currentTestCase));
+		int lastColNum = currentRow.getLastCellNum();
+
+		for (int col = 0; col < lastColNum; col++) {
+			Cell key = colName.getCell(col, Row.RETURN_BLANK_AS_NULL);
+			Cell value = currentRow.getCell(col, Row.RETURN_BLANK_AS_NULL);
+			if (key == null) {
+				// The spreadsheet is empty in this cell
+			} else {
+
+				switch (value.getCellType()) {
+				case Cell.CELL_TYPE_STRING:
+					rowData.put(key.getStringCellValue(), value.getStringCellValue());
+					break;
+				case Cell.CELL_TYPE_BOOLEAN:
+					rowData.put(String.valueOf(key.getBooleanCellValue()), String.valueOf(value.getBooleanCellValue()));
+					break;
+				case Cell.CELL_TYPE_NUMERIC:
+					rowData.put(String.valueOf(key.getNumericCellValue()), String.valueOf(value.getNumericCellValue()));
+					break;
+				}
+
+			}
+
+		}
+		return rowData;
+	}
+	@Override
 	public String writeData(String arg1, String arg2) {
 
 		return null;

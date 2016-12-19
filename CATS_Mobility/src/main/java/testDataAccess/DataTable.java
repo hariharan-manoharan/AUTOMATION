@@ -16,6 +16,8 @@ public interface DataTable {
 	
 	LinkedHashMap<String, String> getRowData(String arg1);
 	
+	LinkedHashMap<String, String> getRowData(String arg1, String arg2);
+	
 	void setCurrentRow(String arg1);
 
 }
