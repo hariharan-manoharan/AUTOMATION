@@ -6,14 +6,15 @@ import org.openqa.selenium.By;
 import com.relevantcodes.extentreports.ExtentTest;
 
 import io.appium.java_client.android.AndroidDriver;
+import main.java.testDataAccess.DataTable;
 import main.java.utils.Utility;
 
 public class RoutinesActivity extends Utility {
 	
 
 	@SuppressWarnings("rawtypes")
-	public RoutinesActivity(ExtentTest test, AndroidDriver driver) {
-		super(test,driver);
+	public RoutinesActivity(ExtentTest test, AndroidDriver driver, DataTable dataTable) {
+		super(test,driver,dataTable);
 	}	
 	
 	
