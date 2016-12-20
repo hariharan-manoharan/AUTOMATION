@@ -30,12 +30,13 @@ public interface RoutineObjectRepository {
 	By IMG_HOME=By.id("home");
 	
 	//InfoPage
-	By TAB_INFO= By.name("Info");
 	By TXT_CLIENT_VERSION=By.id("info_client_version");
 	By TXT_SERVER_VERSION=By.id("info_server_version");
 	By TXT_CATS_VERSION=By.id("info_cats_version");
 	By BTN_INFO_DONE=By.id("info_done_button");
 	
+	//Routines Page
+	By TAB_INFO= By.name("Info");
 	By ID_ACTION_BAR_SUBTITLE = By.id("action_bar_subtitle");
 	By ID_MESSAGE_CONFIRM = By.id("message");
 	By ID_MESSAGE_CONFIRM_YES = By.id("button1");

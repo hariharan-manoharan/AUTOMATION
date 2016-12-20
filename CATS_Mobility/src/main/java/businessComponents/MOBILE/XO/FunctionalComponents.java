@@ -41,5 +41,10 @@ public class FunctionalComponents extends Utility {
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
 		routinesActivity.locationInquiry();
 	}
+	
+	public void pickRoutine(){
+		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
+		routinesActivity.pick();
+	}
 
 }

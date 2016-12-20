@@ -33,8 +33,12 @@ public class LoginActivity extends Utility implements RoutineObjectRepository {
 	}
 
 	public void login() {
-		EnterText(TXT_USERNAME, "Enter - Username", "catsadm");
-		EnterText(TXT_PASSWORD, "Enter - Password", "catscats11");
+		
+		String username = dataTable.getData("Login", "Username");
+		String password = dataTable.getData("Login", "Password");
+		
+		EnterText(TXT_USERNAME, "Enter - Username", username);
+		EnterText(TXT_PASSWORD, "Enter - Password", password);
 		HideKeyboard();
 		Click(BTN_CONNECT, "Click - Connect button");
 	}
