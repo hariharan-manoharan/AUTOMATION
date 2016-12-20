@@ -8,7 +8,7 @@ import io.appium.java_client.android.AndroidDriver;
 import main.java.testDataAccess.DataTable;
 import main.java.utils.Utility;
 
-public class ProfilesActivity extends Utility {	
+public class ProfilesActivity extends Utility implements RoutineObjectRepository  {	
 
 	@SuppressWarnings("rawtypes")
 	public ProfilesActivity(ExtentTest test, AndroidDriver driver, DataTable dataTable) {
@@ -17,9 +17,8 @@ public class ProfilesActivity extends Utility {
 
 	public void selectProfile() {		
 		
-		waitCommand(By.name("ADMIN"));
-		driver.scrollTo("ADMIN");		
-		Click(By.name("ADMIN"), "Click - ADMIN Profile is selected");
+		waitCommand(By.name("ADMIN"));			
+		Click(NAME_LISTTEXT_ADMIN, "Click - ADMIN Profile is selected");
 
 	}
 	
