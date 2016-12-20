@@ -20,10 +20,14 @@ public class LoginActivity extends Utility implements RoutineObjectRepository {
 	public void addConnection() {
 		Click(TAB_CONNECTIONS, "Click - AddConnection");
 		Click(ICON_ADD, "Click - AddConnection Symbol");
-		EnterText(TXT_NAME, "Enter - Connection Name", "AIRTEL QA1");
-		EnterText(TXT_HOST, "Enter - Host", "services-uswest.skytap.com");
-		EnterText(TXT_PORT, "Enter - Port", "21260");
-		Click(TOGGLE_BTN_SSL , "Click - Enable SSL");
+		EnterText(TXT_NAME, "Enter - Connection Name", environmentVariables.get("EnvironmentName"));
+		EnterText(TXT_HOST, "Enter - Host", environmentVariables.get("MobilityHost"));
+		EnterText(TXT_PORT, "Enter - Port", environmentVariables.get("MobilityPort"));
+
+		if(environmentVariables.get("MobilitySSL").equalsIgnoreCase("Yes"))
+			{
+			Click(TOGGLE_BTN_SSL, "Click - Enable SSL");
+			}
 		Click(ICON_SAVE, "Click - Save Connection");
 		Click(IMG_BACK_BTN , "Click - Back button");
 	}

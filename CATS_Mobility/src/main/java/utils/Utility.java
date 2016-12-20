@@ -208,6 +208,7 @@ public class Utility {
 			text = this.driver.findElement(by).getText();
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
+			test.log(LogStatus.INFO, FieldName + ": Not Returned - " + text);
 		}
 		test.log(LogStatus.INFO, FieldName + ":  Returned - " + text);
 		return text.trim();
