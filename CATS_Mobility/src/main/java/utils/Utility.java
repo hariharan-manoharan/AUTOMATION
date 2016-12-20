@@ -387,7 +387,7 @@ public class Utility {
 			connection = DriverManager.getConnection(url, username, password);
 
 		} catch (Exception e) {
-			test.log(LogStatus.FAIL, e);
+			test.log(LogStatus.FAIL, "DB Connection not established");
 
 		}
 
