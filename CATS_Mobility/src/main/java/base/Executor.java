@@ -156,6 +156,7 @@ public class Executor extends Utility implements Runnable {
 		capabilities.setCapability("platformName", testParameters.getPlatformName());
 		capabilities.setCapability("appPackage", testParameters.getAppPackage());
 		capabilities.setCapability("appActivity", testParameters.getAppActivity());
+		capabilities.setCapability("newCommandTimeout", 60 * 5);
 
 		driver = new AndroidDriver(new URL(
 				"http://" + properties.getProperty("RemoteAddress") + ":" + testParameters.getPort() + "/wd/hub"),
