@@ -12,7 +12,9 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.exec.ExecuteException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SessionNotCreatedException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -80,7 +82,7 @@ public class Executor extends Utility implements Runnable {
 			test.log(LogStatus.FAIL, e);
 			return;
 		} catch (InvocationTargetException e) {
-			test.log(LogStatus.FAIL, e);
+			test.log(LogStatus.FAIL, e.getCause());
 			return;
 		} catch (NoSuchMethodException e) {
 			test.log(LogStatus.FAIL, e);
@@ -94,13 +96,21 @@ public class Executor extends Utility implements Runnable {
 		} catch (InterruptedException e) {
 			test.log(LogStatus.FAIL, e);
 			return;
+		}catch (TimeoutException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} catch (NoSuchElementException e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		}finally{
+			end();
 		}
 	}
 
 	public void executeKeywords(LinkedHashMap<String, String> keywords)
 			throws ExecuteException, IOException, InterruptedException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, SessionNotCreatedException {
+			SecurityException, SessionNotCreatedException, TimeoutException, NoSuchElementException {
 
 		driverSetUp();
 
