@@ -1,6 +1,9 @@
 package main.java.businessComponents.MOBILE.AIRTEL;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+
 import com.relevantcodes.extentreports.ExtentTest;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -19,7 +22,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 		Click(By.name(routineName), "Click - Routine - " + routineName + " is selected");
 	}
 
-	public void locationInquiry() {
+	public void locationInquiry() throws TimeoutException, NoSuchElementException {
 
 		selectRoutine("Location Inquiry");
 		String text = GetText(ID_ACTION_BAR_SUBTITLE, "Routine name");
@@ -30,7 +33,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 
 	}
 
-	public void pick() {
+	public void pick() throws TimeoutException, NoSuchElementException {
 		selectRoutine("Pick");
 		String text = GetText(ID_ACTION_BAR_SUBTITLE, "Routine name");
 		if (text.equals("Pick")) {
@@ -42,7 +45,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 			ClickNext();
 			EnterTextWebView(XPATH_TXT_WEBVIEW, "Enter Notes", "Pick - Test Notes");
 			ClickNext();			
-			if (isObjectPresent(ID_MESSAGE)) {
+			if (isObjectPresent(ID_MESSAGE, "Transcation completed message")) {
 				GetText(ID_MESSAGE, "Transcation completed message");
 				Click(ID_MESSAGE_OK, "Click OK");
 			}
@@ -51,7 +54,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 
 	}
 
-	public void pack() {
+	public void pack() throws TimeoutException, NoSuchElementException  {
 		selectRoutine("Pack");
 		String text = GetText(ID_ACTION_BAR_SUBTITLE, "Routine name");
 		if (text.equals("Pack")) {
@@ -68,7 +71,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 			ClickNext();
 			EnterTextWebView(XPATH_TXT_WEBVIEW, "Enter Notes", "Pack - Test Notes");
 			ClickNext();			
-			if (isObjectPresent(ID_MESSAGE)) {
+			if (isObjectPresent(ID_MESSAGE, "Transcation completed message")) {
 				GetText(ID_MESSAGE, "Transcation completed message");
 				Click(ID_MESSAGE_OK, "Click OK");
 			}
@@ -76,7 +79,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 		}
 	}
 
-	public void ship() {
+	public void ship() throws TimeoutException, NoSuchElementException {
 		selectRoutine("Ship");
 		String text = GetText(ID_ACTION_BAR_SUBTITLE, "Routine name");
 		if (text.equals("Ship")) {
@@ -92,7 +95,7 @@ public class RoutinesActivity extends Utility implements RoutineObjectRepository
 			ClickNext();
 			EnterTextWebView(XPATH_TXT_WEBVIEW, "Enter Notes", "Ship - Test Notes");
 			ClickNext();
-			if (isObjectPresent(ID_MESSAGE)) {
+			if (isObjectPresent(ID_MESSAGE, "Transcation completed message")) {
 				GetText(ID_MESSAGE, "Transcation completed message");
 				Click(ID_MESSAGE_OK, "Click OK");
 			}

@@ -1,5 +1,8 @@
 package main.java.businessComponents.MOBILE.AIRTEL;
 
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+
 import com.relevantcodes.extentreports.ExtentTest;
 import io.appium.java_client.android.AndroidDriver;
 import main.java.testDataAccess.DataTable;
@@ -32,22 +35,22 @@ public class FunctionalComponents extends Utility {
 	}
 	
 	
-	public void locationInquiryRoutine(){
+	public void locationInquiryRoutine() throws TimeoutException, NoSuchElementException {
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver, dataTable);
 		routinesActivity.locationInquiry();
 	}
 	
-	public void pickRoutine(){
+	public void pickRoutine() throws TimeoutException, NoSuchElementException{
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver, dataTable);
 		routinesActivity.pick();
 	}
 	
-	public void packRoutine(){
+	public void packRoutine() throws TimeoutException, NoSuchElementException {
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver, dataTable);
 		routinesActivity.pack();
 	}
 	
-	public void shipRoutine(){
+	public void shipRoutine() throws TimeoutException, NoSuchElementException {
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver, dataTable);
 		routinesActivity.ship();
 	}
