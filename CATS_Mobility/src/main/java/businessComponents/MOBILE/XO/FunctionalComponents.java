@@ -28,7 +28,7 @@ public class FunctionalComponents extends Utility {
 
 	public void selectUserProfile() {
 		ProfilesActivity profilesActivity = new ProfilesActivity(test, driver,dataTable);
-		profilesActivity.selectProfile();
+		profilesActivity.selectAdminProfile();
 	}
 	
 	public void verifyVersionInfo() {
@@ -41,10 +41,25 @@ public class FunctionalComponents extends Utility {
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
 		routinesActivity.locationInquiry();
 	}
-	
+	public void stockRoutine(){
+		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
+		routinesActivity.stockASSET();
+	}
 	public void pickRoutine(){
 		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
 		routinesActivity.pick();
 	}
-
+	
+	public void packRoutine(){
+		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
+		routinesActivity.pack();
+	}
+	public void shipRoutine(){
+		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
+		routinesActivity.ship();
+	}
+	public void internalReceiveRoutine(){
+		RoutinesActivity routinesActivity = new RoutinesActivity(test, driver,dataTable);
+		routinesActivity.internalReceive();
+	}
 }

@@ -15,7 +15,7 @@ public class ProfilesActivity extends Utility implements RoutineObjectRepository
 		super(test,driver,dataTable);
 	}	
 
-	public void selectProfile() {		
+	public void selectAdminProfile() {		
 		
 		waitCommand(TAB_ADMIN);
 		ScrolltoText("ADMIN");		
@@ -23,7 +23,8 @@ public class ProfilesActivity extends Utility implements RoutineObjectRepository
 
 	}
 	
-	public void verifyInfo() {		
+	public void verifyInfo() {	
+		selectAdminProfile(); 
 		waitCommand(IMG_HOME);
 		Click(IMG_HOME, "Profile-Home Page is clicked");
 		Click(TAB_INFO, "Profile-Info is clicked");

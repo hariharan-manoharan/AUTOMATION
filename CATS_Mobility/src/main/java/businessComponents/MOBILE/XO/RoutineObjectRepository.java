@@ -45,5 +45,8 @@ public interface RoutineObjectRepository {
 	By XPATH_LABEL_WEBVIEW = By.xpath("//div[@class='ng-scope']/div[@class='routine-prompt ng-binding']");
 	By XPATH_TXT_WEBVIEW = By.xpath("//div[@class='ng-scope']/div[@class='routine-input ng-binding']");
 	By XPATH_SEARCH_WEBVIEW = By.xpath("//div[@class='ng-scope']/div[@class='btn-group pull-right ng-scope']");
+	
+	//Routines Back Button
+	By CONTENT_DESC_ROUITNE_BACK_BTN = By.name("Back");
 }
 
