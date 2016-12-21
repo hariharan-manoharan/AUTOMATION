@@ -22,6 +22,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -118,7 +119,7 @@ public class Utility {
 		return dateFormat.format(calendar.getTime());
 	}
 
-	public void waitCommand(final By by) {
+	public void waitCommand(final By by) throws TimeoutException, NoSuchElementException{
 
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(this.driver);
 		wait.pollingEvery(5, TimeUnit.SECONDS);
@@ -137,27 +138,31 @@ public class Utility {
 			}
 		};
 		wait.until(function);
+	
 	}
 	
-	public boolean isObjectPresent(final By by) {
+	public boolean isObjectPresent(final By by, String objectName) throws TimeoutException, NoSuchElementException{
 
-		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(this.driver);
-		wait.pollingEvery(5, TimeUnit.SECONDS);
-		wait.withTimeout(100, TimeUnit.SECONDS);
-		wait.ignoring(NoSuchElementException.class);
+		
+			FluentWait<WebDriver> wait = new FluentWait<WebDriver>(this.driver);
+			wait.pollingEvery(5, TimeUnit.SECONDS);
+			wait.withTimeout(100, TimeUnit.SECONDS);
+			wait.ignoring(NoSuchElementException.class);
 
-		Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
+			Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
 
-			@Override
-			public Boolean apply(WebDriver arg0) {
-				WebElement element = arg0.findElement(by);
-				if (element != null) {
-					return true;
+				@Override
+				public Boolean apply(WebDriver arg0) {
+					WebElement element = arg0.findElement(by);
+					if (element != null) {
+						return true;
+					}
+					return false;
 				}
-				return false;
-			}
-		};
-		return wait.until(function);
+			};
+			test.log(LogStatus.PASS, "Object - " + objectName + " is present", "");
+			return wait.until(function);
+		
 	}
 
 	public void fluentPredicateWait(final By by) {
@@ -261,19 +266,15 @@ public class Utility {
 	
 	
 	@SuppressWarnings("unchecked")
-	public void EnterTextWebView(By by, String reportName, String text) {
-		try {
+	public void EnterTextWebView(By by, String reportName, String text) throws TimeoutException, NoSuchElementException  {
+		
 			Set<String> contextHandles = driver.getContextHandles();	
 			switchContext(contextHandles,"fulcrum");
 			waitCommand(by);
 			WebElement element = driver.findElement(by);			
 			focusEnterText(element,text);
-			takeScreenshotWebView(contextHandles , reportName);		
+			takeScreenshotWebView(contextHandles , reportName);	
 					
-		} catch (Exception ex) {
-			test.log(LogStatus.FAIL, ex);
-
-		}
 	}
 	
 	public void focusEnterText(WebElement element, String textToEnter){
