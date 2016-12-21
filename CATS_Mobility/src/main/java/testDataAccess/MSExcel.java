@@ -232,7 +232,9 @@ public class MSExcel implements DataTable {
 			if(getData("RunInfo", i, "Execute").equalsIgnoreCase("Yes")){
 
 			testParameter.setCurrentTestCase(getData("RunInfo", i, "TC_ID"));
+			testParameter.setDescription(getData("RunInfo", i, "Description"));
 			testParameter.setExecuteCurrentTestCase(getData("RunInfo", i, "Execute"));
+			testParameter.setConnectDB(getData("RunInfo", i, "Connect_DB"));
 			testParameter.setPort(getData("RunInfo", i, "Port"));
 			testParameter.setBootstrapPort(getData("RunInfo", i, "BootstrapPort"));
 			testParameter.setDeviceName(getData("RunInfo", i, "DeviceName"));

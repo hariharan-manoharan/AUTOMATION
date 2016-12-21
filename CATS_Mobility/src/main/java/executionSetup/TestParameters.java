@@ -4,6 +4,8 @@ public class TestParameters {
 
 	private String executionMode;
 	private String currentTestCase;
+	private String description;
+	private String connectDB;
 	private String executeCurrentTestCase;
 	private String port;
 	private String bootstrapPort;
@@ -38,6 +40,22 @@ public class TestParameters {
 
 	public void setExecuteCurrentTestCase(String executeCurrentTestCase) {
 		this.executeCurrentTestCase = executeCurrentTestCase;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getConnectDB() {
+		return connectDB;
+	}
+
+	public void setConnectDB(String connectDB) {
+		this.connectDB = connectDB;
 	}
 
 	public String getPort() {
