@@ -54,7 +54,7 @@ public class Executor extends Utility implements Runnable {
 	public void run() {
 		try {
 			if (testParameters.getExecuteCurrentTestCase().equalsIgnoreCase("Yes")) {
-				test = report.startTest(testParameters.getCurrentTestCase()+" : "+testParameters.getDescription());
+				test = report.startTest(testParameters.getCurrentTestCase());
 				dataTable.setCurrentRow(testParameters.getCurrentTestCase());
 				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution started", "");
 				String DBconnection=testParameters.getConnectDB();
@@ -148,7 +148,7 @@ public class Executor extends Utility implements Runnable {
 	@SuppressWarnings("rawtypes")
 	public void driverSetUp() throws ExecuteException, IOException, InterruptedException, SessionNotCreatedException {
 
-		appiumServerHandler = new AppiumServerHandler(Integer.parseInt(testParameters.getPort()),
+	appiumServerHandler = new AppiumServerHandler(Integer.parseInt(testParameters.getPort()),
 				testParameters.getBootstrapPort());
 		appiumServerHandler.appiumServerStart();
 
@@ -159,15 +159,17 @@ public class Executor extends Utility implements Runnable {
 		capabilities.setCapability("udid", testParameters.getUdid());
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, testParameters.getBROWSER_NAME());
 		capabilities.setCapability(CapabilityType.VERSION, testParameters.getVERSION());
-		capabilities.setCapability("app", absolutePath + "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
+		//capabilities.setCapability("app", absolutePath + "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
 		capabilities.setCapability("platformName", testParameters.getPlatformName());
 		capabilities.setCapability("appPackage", testParameters.getAppPackage());
 		capabilities.setCapability("appActivity", testParameters.getAppActivity());
-		capabilities.setCapability("newCommandTimeout", 60 * 5);
+		capabilities.setCapability("unicodeKeyboard", "true");
+		capabilities.setCapability("resetKeyboard", "true");
 
 		driver = new AndroidDriver(new URL(
 				"http://" + properties.getProperty("RemoteAddress") + ":" + testParameters.getPort() + "/wd/hub"),
 				capabilities);
+		
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
 		test.log(LogStatus.INFO, "Android Driver and Appium server setup done Successfully", "");
@@ -180,9 +182,9 @@ public class Executor extends Utility implements Runnable {
 			driver.quit();
 		}
 
-		if (appiumServerHandler != null) {
+	/*	if (appiumServerHandler != null) {
 			appiumServerHandler.appiumServerStop();
-		}
+		}*/
 
 	}
 	
