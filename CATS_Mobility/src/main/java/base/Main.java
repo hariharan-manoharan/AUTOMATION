@@ -32,6 +32,7 @@ import main.java.utils.Utility;
  */
 public class Main{
 	
+	private static final int Current_DB = 0;
 	private static ExtentReports report;
 	private static String absolutePath;
 	private static Properties properties;
@@ -57,11 +58,8 @@ public class Main{
 		prepare();		
 		collectRunInfo();		
 		setup();
-		getConnection();
 		execute();
-		closeConnection();
-		tearDown();	
-		
+		tearDown();			
 	}
 	
 	/**
@@ -250,39 +248,6 @@ public class Main{
 		
 	}
 	
-	/************************************************************************************************
-	 * Function   :getConnection() 
-	 * Decsription:Function to connect to DB
-	 * Date		  :17-12-2016	
-	 * Author	  :Saran	
-	 *************************************************************************************************/	
-	private static void getConnection() {
-		
-		Utility util= new Utility();
-		try {
-			util.Getconnections();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	/************************************************************************************************
-	 * Function   :closeConnection()
-	 * Decsription:Function to close DB connection
-	 * Date		  :17-12-2016	
-	 * Author	  :Saran	
-	 *************************************************************************************************/	
-	private static void closeConnection() {
-		
-		Utility util= new Utility();
-		try {
-			util.Closeconnections();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+	
 		
 }

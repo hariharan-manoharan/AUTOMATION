@@ -57,7 +57,14 @@ public class Executor extends Utility implements Runnable {
 				test = report.startTest(testParameters.getCurrentTestCase()+" : "+testParameters.getDescription());
 				dataTable.setCurrentRow(testParameters.getCurrentTestCase());
 				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution started", "");
+				String DBconnection=testParameters.getConnectDB();
+				if(DBconnection.equalsIgnoreCase("Yes")){
+					getConnection();	
+				}					
 				executeKeywords(getKeywords());
+				if(DBconnection.equalsIgnoreCase("Yes")){
+					closeConnection();	
+				}	
 				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution completed", "");
 				report.endTest(test);
 				report.flush();
@@ -177,6 +184,42 @@ public class Executor extends Utility implements Runnable {
 			appiumServerHandler.appiumServerStop();
 		}
 
+	}
+	
+	/************************************************************************************************
+	 * Function   :getConnection() 
+	 * Decsription:Function to connect to DB
+	 * Date		  :17-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+	private static void getConnection() {
+		
+		Utility util= new Utility();
+		try {
+			util.Getconnections();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		
+	}
+	/************************************************************************************************
+	 * Function   :closeConnection()
+	 * Decsription:Function to close DB connection
+	 * Date		  :17-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
+	private static void closeConnection() {
+		
+		Utility util= new Utility();
+		try {
+			util.Closeconnections();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
