@@ -54,17 +54,20 @@ public class Executor extends Utility implements Runnable {
 	public void run() {
 		try {
 			if (testParameters.getExecuteCurrentTestCase().equalsIgnoreCase("Yes")) {
-				test = report.startTest(testParameters.getCurrentTestCase()+" : "+testParameters.getDescription());
+				test = report.startTest(testParameters.getCurrentTestCase() + " : " + testParameters.getDescription());
 				dataTable.setCurrentRow(testParameters.getCurrentTestCase());
 				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution started", "");
-				String DBconnection=testParameters.getConnectDB();
-				if(DBconnection.equalsIgnoreCase("Yes")){
-					getConnection();	
-				}					
+
+				if (testParameters.getConnectDB().equalsIgnoreCase("Yes")) {
+					Getconnections();
+				}
+
 				executeKeywords(getKeywords());
-				if(DBconnection.equalsIgnoreCase("Yes")){
-					closeConnection();	
-				}	
+
+				if (testParameters.getConnectDB().equalsIgnoreCase("Yes")) {
+					Closeconnections();
+				}
+
 				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution completed", "");
 				report.endTest(test);
 				report.flush();
@@ -103,13 +106,16 @@ public class Executor extends Utility implements Runnable {
 		} catch (InterruptedException e) {
 			test.log(LogStatus.FAIL, e);
 			return;
-		}catch (TimeoutException e) {
+		} catch (TimeoutException e) {
 			test.log(LogStatus.FAIL, e);
 			return;
 		} catch (NoSuchElementException e) {
 			test.log(LogStatus.FAIL, e);
 			return;
-		}finally{
+		} catch (Exception e) {
+			test.log(LogStatus.FAIL, e);
+			return;
+		} finally {
 			end();
 		}
 	}
@@ -121,9 +127,10 @@ public class Executor extends Utility implements Runnable {
 
 		driverSetUp();
 
-		Class<?> className = Class.forName("main.java.businessComponents." + execMode +"."+properties.getProperty("Project")+".FunctionalComponents");
+		Class<?> className = Class.forName("main.java.businessComponents." + execMode + "."
+				+ properties.getProperty("Project") + ".FunctionalComponents");
 		Constructor<?> constructor = className.getDeclaredConstructors()[0];
-		Object classInstance = constructor.newInstance(test, driver,dataTable);
+		Object classInstance = constructor.newInstance(test, driver, dataTable);
 
 		for (Entry<String, String> map : keywords.entrySet()) {
 			if (!map.getKey().equals("TC_ID")) {
@@ -148,7 +155,7 @@ public class Executor extends Utility implements Runnable {
 	@SuppressWarnings("rawtypes")
 	public void driverSetUp() throws ExecuteException, IOException, InterruptedException, SessionNotCreatedException {
 
-	appiumServerHandler = new AppiumServerHandler(Integer.parseInt(testParameters.getPort()),
+		appiumServerHandler = new AppiumServerHandler(Integer.parseInt(testParameters.getPort()),
 				testParameters.getBootstrapPort());
 		appiumServerHandler.appiumServerStart();
 
@@ -159,7 +166,8 @@ public class Executor extends Utility implements Runnable {
 		capabilities.setCapability("udid", testParameters.getUdid());
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, testParameters.getBROWSER_NAME());
 		capabilities.setCapability(CapabilityType.VERSION, testParameters.getVERSION());
-		//capabilities.setCapability("app", absolutePath + "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
+		// capabilities.setCapability("app", absolutePath +
+		// "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
 		capabilities.setCapability("platformName", testParameters.getPlatformName());
 		capabilities.setCapability("appPackage", testParameters.getAppPackage());
 		capabilities.setCapability("appActivity", testParameters.getAppActivity());
@@ -169,7 +177,7 @@ public class Executor extends Utility implements Runnable {
 		driver = new AndroidDriver(new URL(
 				"http://" + properties.getProperty("RemoteAddress") + ":" + testParameters.getPort() + "/wd/hub"),
 				capabilities);
-		
+
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
 		test.log(LogStatus.INFO, "Android Driver and Appium server setup done Successfully", "");
@@ -182,46 +190,10 @@ public class Executor extends Utility implements Runnable {
 			driver.quit();
 		}
 
-	/*	if (appiumServerHandler != null) {
+		if (appiumServerHandler != null) {
 			appiumServerHandler.appiumServerStop();
-		}*/
+		}
 
-	}
-	
-	/************************************************************************************************
-	 * Function   :getConnection() 
-	 * Decsription:Function to connect to DB
-	 * Date		  :17-12-2016	
-	 * Author	  :Saran	
-	 *************************************************************************************************/	
-	private static void getConnection() {
-		
-		Utility util= new Utility();
-		try {
-			util.Getconnections();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
-		
-	}
-	/************************************************************************************************
-	 * Function   :closeConnection()
-	 * Decsription:Function to close DB connection
-	 * Date		  :17-12-2016	
-	 * Author	  :Saran	
-	 *************************************************************************************************/	
-	private static void closeConnection() {
-		
-		Utility util= new Utility();
-		try {
-			util.Closeconnections();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 
 }
