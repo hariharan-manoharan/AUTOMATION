@@ -39,6 +39,16 @@ public class RoutinesActivity extends Utility  implements RoutineObjectRepositor
 	
 	public void stockASSET(){
 		
+		
+		String toLocation= dataTable.getData("Stock", "To_Location_Asset");
+		String toStatus= dataTable.getData("Stock", "To_Status_Asset");
+		String toBin= dataTable.getData("Stock", "To_Bin_Asset");
+		String itemno= dataTable.getData("Stock", "Item_No_Asset");
+		String assetcode= dataTable.getData("Stock", "AssetCode");
+		String serialno= dataTable.getData("Stock", "Serial_No");
+		String condition= dataTable.getData("Stock", "Condition_Asset");
+		String notes= dataTable.getData("Stock", "Notes_Asset");
+		
 		selectRoutine("Stock Equipment");	
 		String text = GetText(ID_ACTION_BAR_SUBTITLE, "Routine name");		
 		if(text.equals("Stock Equipment")){
