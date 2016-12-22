@@ -54,7 +54,7 @@ public class Executor extends Utility implements Runnable {
 	public void run() {
 		try {
 			if (testParameters.getExecuteCurrentTestCase().equalsIgnoreCase("Yes")) {
-				test = report.startTest(testParameters.getCurrentTestCase());
+				test = report.startTest(testParameters.getCurrentTestCase()+" : "+testParameters.getDescription());
 				dataTable.setCurrentRow(testParameters.getCurrentTestCase());
 				test.log(LogStatus.INFO, testParameters.getCurrentTestCase() + " execution started", "");
 				String DBconnection=testParameters.getConnectDB();
