@@ -14,7 +14,12 @@ public class ProfilesActivity extends Utility implements RoutineObjectRepository
 	public ProfilesActivity(ExtentTest test, AndroidDriver driver, DataTable dataTable) {
 		super(test,driver,dataTable);
 	}	
-
+	/************************************************************************************************
+	 * Function   :selectAdminProfile
+	 * Decsription:Function to Select admin profile.
+	 * Date		  :21-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
 	public void selectAdminProfile() {		
 		
 		waitCommand(TAB_ADMIN);
@@ -22,7 +27,12 @@ public class ProfilesActivity extends Utility implements RoutineObjectRepository
 		Click(TAB_ADMIN, "Profile-Admin is Clicked");
 
 	}
-	
+	/************************************************************************************************
+	 * Function   :verifyInfo
+	 * Decsription:Function to verify version of the CATS App.
+	 * Date		  :21-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
 	public void verifyInfo() {	
 		selectAdminProfile(); 
 		waitCommand(IMG_HOME);

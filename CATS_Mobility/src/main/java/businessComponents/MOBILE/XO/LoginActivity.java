@@ -16,7 +16,12 @@ public class LoginActivity extends Utility implements RoutineObjectRepository {
 		super(test,driver,dataTable);
 	}	
 
-
+	/************************************************************************************************
+	 * Function   :addConnection
+	 * Decsription:Function to  add new Connections 
+	 * Date		  :21-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
 	public void addConnection() {
 		Click(TAB_CONNECTIONS, "Click - AddConnection");
 		Click(ICON_ADD, "Click - AddConnection Symbol");
@@ -31,7 +36,12 @@ public class LoginActivity extends Utility implements RoutineObjectRepository {
 		Click(ICON_SAVE, "Click - Save Connection");
 		Click(IMG_BACK_BTN , "Click - Back button");
 	}
-
+	/************************************************************************************************
+	 * Function   :login
+	 * Decsription:Function to login CATS APP
+	 * Date		  :21-12-2016	
+	 * Author	  :Saran	
+	 *************************************************************************************************/	
 	public void login() {
 		
 		String username = dataTable.getData("Login", "Username");
