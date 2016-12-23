@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.exec.ExecuteException;
@@ -173,7 +172,8 @@ public class Executor extends Utility implements Runnable {
 		capabilities.setCapability("appActivity", testParameters.getAppActivity());
 		capabilities.setCapability("unicodeKeyboard", "true");
 		capabilities.setCapability("resetKeyboard", "true");
-
+		capabilities.setCapability("newCommandTimeout", "60 * 5");
+		
 		driver = new AndroidDriver(new URL(
 				"http://" + properties.getProperty("RemoteAddress") + ":" + testParameters.getPort() + "/wd/hub"),
 				capabilities);
