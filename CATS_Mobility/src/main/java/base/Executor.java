@@ -166,8 +166,8 @@ public class Executor extends Utility implements Runnable {
 		capabilities.setCapability("udid", testParameters.getUdid());
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, testParameters.getBROWSER_NAME());
 		capabilities.setCapability(CapabilityType.VERSION, testParameters.getVERSION());
-		// capabilities.setCapability("app", absolutePath +
-		// "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
+		capabilities.setCapability("app", absolutePath +
+		 "\\src\\main\\resources\\Libs\\" + testParameters.getApp());
 		capabilities.setCapability("platformName", testParameters.getPlatformName());
 		capabilities.setCapability("appPackage", testParameters.getAppPackage());
 		capabilities.setCapability("appActivity", testParameters.getAppActivity());
