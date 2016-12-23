@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -196,7 +197,8 @@ public class Utility {
 	public void EnterText(By by, String reportName, String text) {
 		try {
 			waitCommand(by);
-			WebElement element = this.driver.findElement(by);
+			WebElement element = this.driver.findElement(by);			
+			this.driver.pressKeyCode(112); // DELETE Key event	 - https://developer.android.com/reference/android/view/KeyEvent.html#KEYCODE_FORWARD_DEL		
 			element.sendKeys(text);
 			takeScreenshot(reportName);
 		} catch (Exception ex) {
@@ -232,6 +234,7 @@ public class Utility {
 		try {
 			waitCommand(by);
 			text = this.driver.findElement(by).getText();
+			
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
 			test.log(LogStatus.INFO, FieldName + ": Not Returned - " + text);
@@ -240,7 +243,6 @@ public class Utility {
 		return text.trim();
 
 	}
-	
 	
 
 	@SuppressWarnings("unchecked")
