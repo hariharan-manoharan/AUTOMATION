@@ -25,6 +25,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -35,6 +36,7 @@ import com.google.common.base.Predicate;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import main.java.reporting.HtmlReport;
 import main.java.testDataAccess.DataTable;
@@ -228,13 +230,30 @@ public class Utility {
 		}
 	}
 
-	public String GetText(By by, String FieldName) {
+	public String GetText(By by, String FieldName) throws  WebDriverException {
 		String text = null;
 		
 		try {
 			waitCommand(by);
-			text = this.driver.findElement(by).getText();
-			
+			WebElement element = this.driver.findElement(by);
+			text = element.getText();
+		} catch (Exception ex) {
+			test.log(LogStatus.FAIL, ex);
+			test.log(LogStatus.INFO, FieldName + ": Not Returned - " + text);
+		}
+		test.log(LogStatus.INFO, FieldName + ":  Returned - " + text);
+		return text.trim();
+
+	}
+	
+	
+	
+	public String GetTextByContains(By by, String FieldName, String contains) throws  WebDriverException {
+		String text = null;
+		
+		try {					
+			MobileElement element = (MobileElement) driver.findElementByAndroidUIAutomator("new UiSelector().descriptionContains(\""+contains+"\")");
+			text = element.getText();				
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
 			test.log(LogStatus.INFO, FieldName + ": Not Returned - " + text);
@@ -376,6 +395,118 @@ public class Utility {
 		test.log(LogStatus.FAIL, "Transaction created not successfully");
 		return false;
 
+	}
+	
+	
+	/**
+	 * Function to get shipment number for a Transfer 
+	 * 
+	 * @param transferNumber
+	 * @return shipmentNumber
+	 * @author Hari
+	 * @since 12/23/2016 
+	 * 
+	 */
+	
+	public String getShipmentNumber(String transferNumber){
+		String shipmentNumber = null;
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = connection.createStatement();			
+			rs = stmt.executeQuery("SELECT SHIPMENTNUMBER FROM CATS_SHIPMENT WHERE TRANSFERID IN (SELECT TRANSFERID FROM CATS_TRANSFER WHERE TRANSFERNUMBER='"+transferNumber+"') ORDER BY SHIPMENTNUMBER DESC");			
+			while (rs.next()){
+				rs.getObject(1);
+				shipmentNumber = rs.getString("SHIPMENTNUMBER");
+				System.out.println(shipmentNumber);
+				if(!shipmentNumber.equals(null)){
+					break;
+				}
+				return shipmentNumber;
+
+			} 
+		}catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return shipmentNumber;		
+
+	}
+	
+	
+	/**
+	 * Function to single column data from Database
+	 * 
+	 * @param1 query
+	 * @param2 dataRequired
+	 * @return data
+	 * @author Hari
+	 * @since 12/23/2016 
+	 * 
+	 */
+	
+	public String selectQuerySingleValue(String query, String dataRequired){
+		String data = null;
+		Statement stmt;
+		ResultSet rs;	
+		
+		try {
+			stmt = connection.createStatement();			
+			rs = stmt.executeQuery(query);			
+			while (rs.next()){
+				rs.getObject(1);
+				data = rs.getString(dataRequired);				
+				if(!data.equals(null)){
+					break;
+				}
+				return data;
+
+			} 
+		}catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return data.trim();		
+
+	}
+	
+	
+	/**
+	 * Function to multiple column data from Database
+	 * 
+	 * @param1 query
+	 * @param2 dataRequired
+	 * @return data
+	 * @author Hari
+	 * @since 12/24/2016 
+	 * 
+	 */
+	
+	public LinkedHashMap<String, String> selectQueryMultipleValues(String query, String dataRequired) {
+		
+		Statement stmt;
+		ResultSet rs;
+		int lineCount = 0;
+		LinkedHashMap<String, String> data = new LinkedHashMap<String, String>();
+		
+		try {
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+
+				lineCount++;
+				String[] key = dataRequired.split("#");
+
+				for (int i = 0; i < key.length; i++) {
+					String value = rs.getString(key[i]);
+					data.put(key[i] + "_" + lineCount, value);
+				}
+
+			}
+		} catch (SQLException e) {
+			test.log(LogStatus.FAIL, e);
+		}
+
+		return data;
+		
 	}
 	
 	/************************************************************************************************
@@ -525,6 +656,9 @@ public class Utility {
 		return partcode;		
 
 	}
+	
+	
+
 
 
 }
