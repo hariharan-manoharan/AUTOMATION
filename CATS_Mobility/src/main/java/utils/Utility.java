@@ -398,39 +398,6 @@ public class Utility {
 	}
 	
 	
-	/**
-	 * Function to get shipment number for a Transfer 
-	 * 
-	 * @param transferNumber
-	 * @return shipmentNumber
-	 * @author Hari
-	 * @since 12/23/2016 
-	 * 
-	 */
-	
-	public String getShipmentNumber(String transferNumber){
-		String shipmentNumber = null;
-		Statement stmt;
-		ResultSet rs;
-		try {
-			stmt = connection.createStatement();			
-			rs = stmt.executeQuery("SELECT SHIPMENTNUMBER FROM CATS_SHIPMENT WHERE TRANSFERID IN (SELECT TRANSFERID FROM CATS_TRANSFER WHERE TRANSFERNUMBER='"+transferNumber+"') ORDER BY SHIPMENTNUMBER DESC");			
-			while (rs.next()){
-				rs.getObject(1);
-				shipmentNumber = rs.getString("SHIPMENTNUMBER");
-				System.out.println(shipmentNumber);
-				if(!shipmentNumber.equals(null)){
-					break;
-				}
-				return shipmentNumber;
-
-			} 
-		}catch (SQLException e) {			
-			e.printStackTrace();
-		}
-		return shipmentNumber;		
-
-	}
 	
 	
 	/**
