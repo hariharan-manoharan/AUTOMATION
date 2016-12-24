@@ -10,13 +10,13 @@ public interface DataTable {
 
 	ArrayList<TestParameters> getRunManagerInfo();
 	
-	String getData(String arg1, String arg2);
+	String getData(String workSheetName, String columnName);
 	
-	String writeData(String arg1, String arg2);
+	String writeData(String workSheetName, String columnName);
 	
-	LinkedHashMap<String, String> getRowData(String arg1);
+	LinkedHashMap<String, String> getRowData(String workSheetName);
 	
-	LinkedHashMap<String, String> getRowData(String arg1, String arg2);
+	LinkedHashMap<String, String> getRowData(String workSheetName, String testcaseName);
 	
 	void setCurrentRow(String arg1);
 
