@@ -274,13 +274,25 @@ public class Utility {
 		}
 
 	}
+	
+	
+	/**
+	 * Function to enter text in WebElement
+	 * 
+	 * @param1 By by	
+	 * @param2 String reportName
+	 * @param3 String text
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void EnterText(By by, String reportName, String text) {
 		try {
 			waitCommand(by);
 			WebElement element = this.driver.findElement(by);
-			this.driver.pressKeyCode(112); // DELETE Key event -
-											// https://developer.android.com/reference/android/view/KeyEvent.html#KEYCODE_FORWARD_DEL
+			this.driver.pressKeyCode(112); // DELETE Key event - // https://developer.android.com/reference/android/view/KeyEvent.html#KEYCODE_FORWARD_DEL
 			element.sendKeys(text);
 			takeScreenshot(reportName);
 		} catch (Exception ex) {
@@ -288,6 +300,18 @@ public class Utility {
 
 		}
 	}
+	
+	
+	/**
+	 * Function to click WebElement
+	 * 
+	 * @param1 By by	
+	 * @param2 String reportName	 
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void Click(By by, String reportName) {
 		try {
@@ -299,6 +323,18 @@ public class Utility {
 			test.log(LogStatus.FAIL, ex);
 		}
 	}
+	
+	
+	/**
+	 * Function to click WebElement
+	 * 
+	 * @param1 WebElement element	
+	 * @param2 String reportName	 
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void Click(WebElement element, String reportName) {
 		try {
@@ -309,8 +345,19 @@ public class Utility {
 			test.log(LogStatus.FAIL, ex);
 		}
 	}
+	
+	/**
+	 * Function to get text from WebElement
+	 * 
+	 * @param1 By by	
+	 * @param2 String fieldName	 
+	 * @return String text
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
-	public String GetText(By by, String FieldName) throws WebDriverException {
+	public String GetText(By by, String fieldName) throws WebDriverException {
 		String text = null;
 
 		try {
@@ -319,14 +366,26 @@ public class Utility {
 			text = element.getText();
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
-			test.log(LogStatus.INFO, FieldName + ": Not Returned - " + text);
+			test.log(LogStatus.INFO, fieldName + ": Not Returned - " + text);
 		}
-		test.log(LogStatus.INFO, FieldName + ":  Returned - " + text);
+		test.log(LogStatus.INFO, fieldName + ":  Returned - " + text);
 		return text.trim();
 
 	}
+	
+	/**
+	 * Function to get text from WebElement using UiSelector -> descriptionContains  -----> Not Tested, So don'y =t use this method as of now
+	 * 
+	 * @param1 By by	
+	 * @param2 String fieldName
+	 * @param3 String contains	 
+	 * @return String text
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
-	public String GetTextByContains(By by, String FieldName, String contains) throws WebDriverException {
+	public String GetTextByContains(By by, String fieldName, String contains) throws WebDriverException {
 		String text = null;
 
 		try {
@@ -335,15 +394,27 @@ public class Utility {
 			text = element.getText();
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
-			test.log(LogStatus.INFO, FieldName + ": Not Returned - " + text);
+			test.log(LogStatus.INFO, fieldName + ": Not Returned - " + text);
 		}
-		test.log(LogStatus.INFO, FieldName + ":  Returned - " + text);
+		test.log(LogStatus.INFO, fieldName + ":  Returned - " + text);
 		return text.trim();
 
 	}
+	
+	
+	/**
+	 * Function to get text from WebElement - WEBVIEW
+	 * 
+	 * @param1 By by	
+	 * @param2 String fieldname	 
+	 * @return String text
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	@SuppressWarnings("unchecked")
-	public String GetTextWebView(By by, String fieldname) {
+	public String GetTextWebView(By by, String fieldName) {
 		String text = null;
 
 		try {
@@ -355,10 +426,23 @@ public class Utility {
 		} catch (Exception ex) {
 			test.log(LogStatus.FAIL, ex);
 		}
-		test.log(LogStatus.INFO, fieldname + ":  Returned - " + text);
+		test.log(LogStatus.INFO, fieldName + ":  Returned - " + text);
 		return text.trim();
 
 	}
+	
+	
+	/**
+	 * Function to enter text in WebElement - WEBVIEW
+	 * 
+	 * @param1 By by	
+	 * @param2 String reportName
+	 * @param3 String text
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	@SuppressWarnings("unchecked")
 	public void EnterTextWebView(By by, String reportName, String text)
@@ -372,6 +456,18 @@ public class Utility {
 		takeScreenshotWebView(contextHandles, reportName);
 
 	}
+	
+	
+	/**
+	 * Function to focus WebElement and perform actions to enter text (Works in combination with EnterTextWebView function) - WEBVIEW
+	 * 
+	 * @param1 WebElement element	
+	 * @param2 String textToEnter
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void focusEnterText(WebElement element, String textToEnter) {
 		Actions actions = new Actions(this.driver);
@@ -381,6 +477,16 @@ public class Utility {
 		actions.sendKeys(textToEnter);
 		actions.build().perform();
 	}
+	
+	/**
+	 * Function to get list of WebElements
+	 * 
+	 * @param1 By by 
+	 * @return List<WebElement> webElements
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	@SuppressWarnings("unchecked")
 	public List<WebElement> GetWebElements(By by) {
@@ -398,6 +504,17 @@ public class Utility {
 		this.driver.hideKeyboard();
 
 	}
+	
+	
+	/**
+	 * Function to click "Next" button in CATS Mobility - Application Specific
+	 * 
+	 * @param no parameters
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void ClickNext() {
 		try {
@@ -409,6 +526,16 @@ public class Utility {
 			test.log(LogStatus.FAIL, ex);
 		}
 	}
+	
+	/**
+	 * Function to click "Previous" button in CATS Mobility - Application Specific
+	 * 
+	 * @param no parameters
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void ClickPrevious() {
 		try {
@@ -420,6 +547,18 @@ public class Utility {
 		}
 	}
 
+	
+	/**
+	 * Function to compare two texts 
+	 * 
+	 * @param1 String expected	
+	 * @param2 By by
+	 * @return boolean
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
+	
 	public boolean CompareText(String expected, By by) {
 
 		String actual = this.driver.findElement(by).getText().trim();
@@ -433,6 +572,18 @@ public class Utility {
 		}
 
 	}
+	
+	/**
+	 * Function to Enter text using Command prompt  -  Not tested, So test this method using  
+	 * 
+	 * @param1 By by	
+	 * @param2 String reportName
+	 * @param3 String text
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	public void EnterTextCmd(By by, String reportName, String text) {
 		try {
@@ -447,6 +598,18 @@ public class Utility {
 
 		}
 	}
+	
+	
+	/**
+	 * Function to switch between contexts  
+	 * 
+	 * @param1 Set<String> contextHandles	
+	 * @param2 String contextName
+	 * @return void
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
 
 	@SuppressWarnings("unchecked")
 	public void switchContext(Set<String> contextHandles, String contextName) {
@@ -459,6 +622,19 @@ public class Utility {
 		}
 	}
 
+	
+	
+	/**
+	 * Function to Verify if transaction is completed - Application Specific  -   Not tested, So test this method using  
+	 * 
+	 * @param1 By by	
+	 * @param2 String loopingField
+	 * @return boolean
+	 * @author Hari 
+	 * @since 12/27/2016
+	 * 
+	 */
+	
 	public boolean verifyTransactionCreation(By by, String loopingField) {
 
 		if (GetTextWebView(by, "Looping field").equalsIgnoreCase(loopingField)) {
