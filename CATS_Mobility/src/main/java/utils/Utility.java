@@ -374,7 +374,7 @@ public class Utility {
 	}
 	
 	/**
-	 * Function to get text from WebElement using UiSelector -> descriptionContains  -----> Not Tested, So don'y =t use this method as of now
+	 * Function to get text from WebElement using UiSelector -> descriptionContains  -----> Not Tested, So don't use this method as of now
 	 * 
 	 * @param1 By by	
 	 * @param2 String fieldName
